@@ -2,8 +2,8 @@ import pandas as pd
 import random
 import string
 
-input_csv = r"flights_usdot.csv"
-output_csv = r"final_flights_usdot.csv"
+input_csv = r"flights_2015.csv"
+output_csv = r"flights_cleaned_2015.csv"
 
 columns_to_read = [
     "YEAR", "MONTH", "DAY", "AIRLINE", "TAIL_NUMBER", "ORIGIN_AIRPORT", "DESTINATION_AIRPORT", "DISTANCE", "ARRIVAL_DELAY", "DEPARTURE_DELAY",  "DEPARTURE_TIME", "CANCELLED", "CANCELLATION_REASON"   
@@ -40,19 +40,6 @@ def convert_to_hhmmss(time_val):
     
     return f"{hours:02d}:{minutes:02d}:00"
 df['DEPARTURE_TIME'] = df['DEPARTURE_TIME'].apply(convert_to_hhmmss)
-
-# Funtion to replace Null values in Arrival and Departure
-df['DEPARTURE_DELAY'].fillna(0, inplace=True)
-df['ARRIVAL_DELAY'].fillna(0, inplace=True)
-def format_delay(val):
-    if val < 0:
-        return f"{int(abs(val))} minutes early"
-    elif val > 0:
-        return f"{int(val)} minutes late"
-    else:
-        return "On time"
-df['DEPARTURE_DELAY'] = df['DEPARTURE_DELAY'].apply(format_delay)
-df['ARRIVAL_DELAY'] = df['ARRIVAL_DELAY'].apply(format_delay)
 
 # Funtion to replace Null value in CANCELLATION_REASON 
 cancellation_reason_map = {

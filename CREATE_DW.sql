@@ -12,7 +12,7 @@ GO
 
 -- Dimension Table: DimDate
 CREATE TABLE DimDate (
-    DateKey INT PRIMARY KEY, -- e.g. YYYYMMDD
+    DateKey INT PRIMARY KEY,
     Year INT,
     Month INT,
     Day INT
@@ -55,11 +55,4 @@ CREATE TABLE FactFlight (
     FOREIGN KEY (OriginAirportKey) REFERENCES DimAirport(AirportKey),
     FOREIGN KEY (DestAirportKey) REFERENCES DimAirport(AirportKey)
 );
-GO
-
--- Indexes for faster OLAP queries
-CREATE INDEX idx_factflight_datekey ON FactFlight(DateKey);
-CREATE INDEX idx_factflight_airlinekey ON FactFlight(AirlineKey);
-CREATE INDEX idx_factflight_originairportkey ON FactFlight(OriginAirportKey);
-CREATE INDEX idx_factflight_destairportkey ON FactFlight(DestAirportKey);
 GO

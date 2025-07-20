@@ -1,7 +1,10 @@
 import pandas as pd
 
+input_csv = r"flights_2022.csv"
+output_csv = r"flights_cleaned_2022.csv"
+
 # Load the original flight.csv
-df = pd.read_csv("flight.csv")
+df = pd.read_csv(input_csv)
 
 # Clean column names just in case
 df.columns = df.columns.str.strip()
@@ -23,13 +26,12 @@ def format_delay(value):
 if "Arrival_Delay" in df.columns:
     df["Arrival_Delay"] = df["Arrival_Delay"].apply(format_delay)
 else:
-    print("⚠'Arrival_Delay' column not found.")
+    print("'Arrival_Delay' column not found.")
 
 if "Departure_Delay" in df.columns:
     df["Departure_Delay"] = df["Departure_Delay"].apply(format_delay)
 else:
-    print("⚠'Departure_Delay' column not found.")
+    print("'Departure_Delay' column not found.")
 
 # Save to a new file
-df.to_csv("flight_formatted.csv", index=False)
-print(" Replaced delay values saved to 'flight_formatted.csv'.")
+df.to_csv(output_csv, index=False)

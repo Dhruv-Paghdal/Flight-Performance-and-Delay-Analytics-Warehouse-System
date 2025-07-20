@@ -3,8 +3,8 @@ import random
 import string
 from datetime import time
 
-input_csv = "C:\\Users\\swarp\\OneDrive\\Desktop\\ADT_FINAL\\2023_final\\csv\\raw\\US_flights_2023_US_civil_flights_Kaggle.csv"
-output_csv = "C:\\Users\\swarp\\OneDrive\\Desktop\\ADT_FINAL\\2023_final\\csv\\clean\\final_flights.csv"
+input_csv = r"flights_2023.csv"
+output_csv = r"flights_cleaned_2023.csv"
 
 columns_to_read = [
     "FlightDate","Airline", "Tail_Number", "Dep_Airport", "Arr_Airport", "Distance_type", "Arr_Delay", "Dep_Delay",  "DepTime_label",   
@@ -69,17 +69,6 @@ def map_random_distance(dist_type):
     else:
         return None
 df['DISTANCE'] = df['Distance_type'].apply(map_random_distance)
-
-# Format arrival departure
-def format_delay(val):
-    if val < 0:
-        return f"{int(abs(val))} minutes early"
-    elif val > 0:
-        return f"{int(val)} minutes late"
-    else:
-        return "On time"
-df['DEPARTURE_DELAY'] = df['Dep_Delay'].apply(format_delay)
-df['ARRIVAL_DELAY'] = df['Arr_Delay'].apply(format_delay)
 
 # Format Departure time
 def generate_random_time(period):
